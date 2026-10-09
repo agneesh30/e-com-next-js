@@ -26,7 +26,7 @@ import {CatalogService} from '../../services/catalog.service';
           </button>
 
           <!-- Boutique Brand Logo -->
-          <a routerLink="/" class="flex items-center gap-2.5 group">
+          <a routerLink="/" (click)="onNavClick()" class="flex items-center gap-2.5 group">
             <div class="w-9 h-9 rounded-lg bg-[#be185d] flex items-center justify-center text-white shadow-xs">
               <span class="font-serif font-bold text-lg tracking-tight">V</span>
             </div>
@@ -47,6 +47,7 @@ import {CatalogService} from '../../services/catalog.service';
             routerLink="/shop"
             routerLinkActive="text-[#be185d] font-bold"
             [routerLinkActiveOptions]="{exact: true}"
+            (click)="onNavClick()"
             class="hover:text-[#be185d] transition-colors py-2"
           >
             Shop
@@ -54,6 +55,7 @@ import {CatalogService} from '../../services/catalog.service';
           <a
             routerLink="/collections"
             routerLinkActive="text-[#be185d] font-bold"
+            (click)="onNavClick()"
             class="hover:text-[#be185d] transition-colors py-2"
           >
             Collections
@@ -61,6 +63,7 @@ import {CatalogService} from '../../services/catalog.service';
           <a
             routerLink="/categories"
             routerLinkActive="text-[#be185d] font-bold"
+            (click)="onNavClick()"
             class="hover:text-[#be185d] transition-colors py-2"
           >
             Categories
@@ -68,6 +71,7 @@ import {CatalogService} from '../../services/catalog.service';
           <a
             routerLink="/about"
             routerLinkActive="text-[#be185d] font-bold"
+            (click)="onNavClick()"
             class="hover:text-[#be185d] transition-colors py-2"
           >
             About
@@ -75,6 +79,7 @@ import {CatalogService} from '../../services/catalog.service';
           <a
             routerLink="/contact"
             routerLinkActive="text-[#be185d] font-bold"
+            (click)="onNavClick()"
             class="hover:text-[#be185d] transition-colors py-2"
           >
             Contact
@@ -124,6 +129,7 @@ import {CatalogService} from '../../services/catalog.service';
           <!-- Admin Portal Shortcut -->
           <a
             routerLink="/admin"
+            (click)="onNavClick()"
             class="hidden lg:inline-flex p-2 text-stone-400 hover:text-[#282c3f] transition-colors"
             title="Merchant Admin Portal"
           >
@@ -138,7 +144,7 @@ import {CatalogService} from '../../services/catalog.service';
           <nav class="flex flex-col space-y-1 text-sm font-medium text-[#282c3f]">
             <a
               routerLink="/shop"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="px-3 py-2.5 rounded-lg hover:bg-[#fafafa] hover:text-[#be185d] transition-colors flex items-center justify-between"
             >
               <span>Shop All Clothing</span>
@@ -146,7 +152,7 @@ import {CatalogService} from '../../services/catalog.service';
             </a>
             <a
               routerLink="/collections"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="px-3 py-2.5 rounded-lg hover:bg-[#fafafa] hover:text-[#be185d] transition-colors flex items-center justify-between"
             >
               <span>Collections</span>
@@ -154,7 +160,7 @@ import {CatalogService} from '../../services/catalog.service';
             </a>
             <a
               routerLink="/categories"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="px-3 py-2.5 rounded-lg hover:bg-[#fafafa] hover:text-[#be185d] transition-colors flex items-center justify-between"
             >
               <span>Categories</span>
@@ -162,7 +168,7 @@ import {CatalogService} from '../../services/catalog.service';
             </a>
             <a
               routerLink="/about"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="px-3 py-2.5 rounded-lg hover:bg-[#fafafa] hover:text-[#be185d] transition-colors flex items-center justify-between"
             >
               <span>About the Brand</span>
@@ -170,7 +176,7 @@ import {CatalogService} from '../../services/catalog.service';
             </a>
             <a
               routerLink="/contact"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="px-3 py-2.5 rounded-lg hover:bg-[#fafafa] hover:text-[#be185d] transition-colors flex items-center justify-between"
             >
               <span>Contact & Concierge</span>
@@ -190,7 +196,7 @@ import {CatalogService} from '../../services/catalog.service';
 
             <a
               routerLink="/admin"
-              (click)="closeMobileMenu()"
+              (click)="onNavClick()"
               class="text-xs text-stone-500 hover:text-[#282c3f] font-medium"
             >
               Admin Portal
@@ -215,6 +221,13 @@ export class Header {
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
+  }
+
+  onNavClick(): void {
+    this.closeMobileMenu();
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
   }
 
   openCart(): void {

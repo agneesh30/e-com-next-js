@@ -2,14 +2,16 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import {provideHttpClient, withFetch} from '@angular/common/http';
+import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
 import {
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
+  withRouterConfig,
 } from '@angular/router';
 
 import {routes} from './app.routes';
+import {authInterceptor} from './services/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,9 +22,12 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({
         scrollPositionRestoration: 'top',
         anchorScrolling: 'enabled',
+      }),
+      withRouterConfig({
+        onSameUrlNavigation: 'reload',
       })
     ),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
   ],
 };
 

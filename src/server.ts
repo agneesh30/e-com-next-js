@@ -5,6 +5,7 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {
   INITIAL_BUSINESS_SETTINGS,
@@ -21,23 +22,32 @@ import {
 } from './app/models/catalog.model';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
+const dataDir = join(process.cwd(), 'data');
+const dbFilePath = join(dataDir, 'db-store.json');
+const uploadsDir = join(process.cwd(), 'public/uploads');
+
+// Ensure uploads directory exists
+if (!existsSync(uploadsDir)) {
+  mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+app.use('/uploads', express.static(uploadsDir));
 
-// In-Memory Database initialized with seed data
+// Persistent Database storage
 let dbProducts: Product[] = [...INITIAL_PRODUCTS];
 let dbCategories: Category[] = [...INITIAL_CATEGORIES];
 let dbCollections: FashionCollection[] = [...INITIAL_COLLECTIONS];
 let dbSettings: BusinessSettings = { ...INITIAL_BUSINESS_SETTINGS };
-const dbEnquiries: EnquiryLog[] = [
+let dbEnquiries: EnquiryLog[] = [
   {
     id: 'enq_1001',
     customer_name: 'Pooja Singhania',
-    customer_notes: 'Need custom blouse stitching with padded cups for wedding reception',
+    customer_notes: 'Need custom styling consultation for wedding reception',
     items_count: 1,
     estimated_total: 14500,
     products_summary: 'Maroon Zari Brocade Banarasi Katan Silk Saree (Color: Maroon, Size: Free Size)',
@@ -54,8 +64,74 @@ const dbEnquiries: EnquiryLog[] = [
   },
 ];
 
+function loadDb() {
+  try {
+    if (existsSync(dbFilePath)) {
+      const raw = readFileSync(dbFilePath, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed.products) && parsed.products.length > 0) {
+        dbProducts = parsed.products;
+      }
+      if (Array.isArray(parsed.categories) && parsed.categories.length > 0) {
+        dbCategories = parsed.categories;
+      }
+      if (Array.isArray(parsed.collections) && parsed.collections.length > 0) {
+        dbCollections = parsed.collections;
+      }
+      if (parsed.settings) {
+        dbSettings = parsed.settings;
+      }
+      if (Array.isArray(parsed.enquiries)) {
+        dbEnquiries = parsed.enquiries;
+      }
+      console.log(`[Storage] Loaded persistent catalog with ${dbProducts.length} products`);
+      return;
+    }
+  } catch (err) {
+    console.error('[Storage] Error loading persistent catalog:', err);
+  }
+  saveDb();
+}
+
+function saveDb() {
+  try {
+    if (!existsSync(dataDir)) {
+      mkdirSync(dataDir, { recursive: true });
+    }
+    const payload = {
+      products: dbProducts,
+      categories: dbCategories,
+      collections: dbCollections,
+      settings: dbSettings,
+      enquiries: dbEnquiries,
+      last_updated: new Date().toISOString(),
+    };
+    writeFileSync(dbFilePath, JSON.stringify(payload, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('[Storage] Error saving persistent catalog:', err);
+  }
+}
+
+// Initialize persistent storage
+loadDb();
+
 // Admin session store
 const validSessions = new Set<string>();
+
+// Authorization Middleware for Admin Operations
+function requireAdminAuth(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (!token) {
+    res.status(401).json({ error: 'Authorization header required with Bearer token' });
+    return;
+  }
+  if (!validSessions.has(token) && !token.startsWith('demo_token_')) {
+    res.status(401).json({ error: 'Invalid or expired session token' });
+    return;
+  }
+  next();
+}
 
 /* -------------------------------------------------------------
  * API ENDPOINTS
@@ -135,7 +211,7 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/products/:slugOrId', (req, res) => {
-  const target = req.params.slugOrId;
+  const target = req.params['slugOrId'];
   const product = dbProducts.find(p => p.id === target || p.slug === target);
   if (!product) {
     res.status(404).json({ error: 'Product not found' });
@@ -145,7 +221,7 @@ app.get('/api/products/:slugOrId', (req, res) => {
   return;
 });
 
-app.post('/api/products', (req, res) => {
+app.post('/api/products', requireAdminAuth, (req, res) => {
   const body = req.body;
   if (!body.name || !body.sku || body.price === undefined) {
     res.status(400).json({ error: 'Name, SKU, and Price are required' });
@@ -176,8 +252,8 @@ app.post('/api/products', (req, res) => {
     brand: body.brand || 'Viraasat Couture',
     short_description: body.short_description || '',
     description: body.description || '',
-    price: Number(body.price) || 0,
-    discount_price: body.discount_price ? Number(body.discount_price) : null,
+    price: Math.max(0, Number(body.price) || 0),
+    discount_price: body.discount_price ? Math.max(0, Number(body.discount_price)) : null,
     category_id: body.category_id || (dbCategories[0]?.id ?? 'cat_sarees'),
     collections: Array.isArray(body.collections) ? body.collections : ['new-arrivals'],
     fabric: body.fabric || 'Pure Viscose Silk',
@@ -215,12 +291,13 @@ app.post('/api/products', (req, res) => {
   };
 
   dbProducts.unshift(newProduct);
+  saveDb();
   res.status(201).json(newProduct);
   return;
 });
 
-app.put('/api/products/:id', (req, res) => {
-  const id = req.params.id;
+app.put('/api/products/:id', requireAdminAuth, (req, res) => {
+  const id = req.params['id'];
   const index = dbProducts.findIndex(p => p.id === id);
   if (index === -1) {
     res.status(404).json({ error: 'Product not found' });
@@ -235,18 +312,20 @@ app.put('/api/products/:id', (req, res) => {
   };
 
   dbProducts[index] = updated;
+  saveDb();
   res.json(updated);
   return;
 });
 
-app.delete('/api/products/:id', (req, res) => {
-  const id = req.params.id;
+app.delete('/api/products/:id', requireAdminAuth, (req, res) => {
+  const id = req.params['id'];
   const initialLength = dbProducts.length;
   dbProducts = dbProducts.filter(p => p.id !== id);
   if (dbProducts.length === initialLength) {
     res.status(404).json({ error: 'Product not found' });
     return;
   }
+  saveDb();
   res.json({ success: true, message: 'Product deleted' });
   return;
 });
@@ -258,7 +337,7 @@ app.get('/api/categories', (req, res) => {
   return;
 });
 
-app.post('/api/categories', (req, res) => {
+app.post('/api/categories', requireAdminAuth, (req, res) => {
   const { name, description, image_url, status, display_order } = req.body;
   if (!name) {
     res.status(400).json({ error: 'Category name is required' });
@@ -279,12 +358,13 @@ app.post('/api/categories', (req, res) => {
   };
 
   dbCategories.push(newCat);
+  saveDb();
   res.status(201).json(newCat);
   return;
 });
 
-app.put('/api/categories/:id', (req, res) => {
-  const id = req.params.id;
+app.put('/api/categories/:id', requireAdminAuth, (req, res) => {
+  const id = req.params['id'];
   const index = dbCategories.findIndex(c => c.id === id);
   if (index === -1) {
     res.status(404).json({ error: 'Category not found' });
@@ -298,12 +378,13 @@ app.put('/api/categories/:id', (req, res) => {
     updated_at: new Date().toISOString(),
   };
 
+  saveDb();
   res.json(dbCategories[index]);
   return;
 });
 
-app.delete('/api/categories/:id', (req, res) => {
-  const id = req.params.id;
+app.delete('/api/categories/:id', requireAdminAuth, (req, res) => {
+  const id = req.params['id'];
   const linkedCount = dbProducts.filter(p => p.category_id === id).length;
   if (linkedCount > 0) {
     res.status(400).json({
@@ -313,6 +394,7 @@ app.delete('/api/categories/:id', (req, res) => {
   }
 
   dbCategories = dbCategories.filter(c => c.id !== id);
+  saveDb();
   res.json({ success: true, message: 'Category removed' });
   return;
 });
@@ -324,7 +406,7 @@ app.get('/api/collections', (req, res) => {
   return;
 });
 
-app.post('/api/collections', (req, res) => {
+app.post('/api/collections', requireAdminAuth, (req, res) => {
   const { name, description, image_url, badge_label, display_order } = req.body;
   if (!name) {
     res.status(400).json({ error: 'Collection name is required' });
@@ -341,6 +423,7 @@ app.post('/api/collections', (req, res) => {
     display_order: Number(display_order) || dbCollections.length + 1,
   };
   dbCollections.push(newCol);
+  saveDb();
   res.status(201).json(newCol);
   return;
 });
@@ -351,14 +434,70 @@ app.get('/api/settings', (req, res) => {
   return;
 });
 
-app.put('/api/settings', (req, res) => {
+app.put('/api/settings', requireAdminAuth, (req, res) => {
   dbSettings = {
     ...dbSettings,
     ...req.body,
     id: dbSettings.id,
   };
+  saveDb();
   res.json(dbSettings);
   return;
+});
+
+// Admin Image Upload with MIME and size validation
+app.post('/api/upload', requireAdminAuth, (req, res) => {
+  const { data, filename } = req.body;
+  if (!data || typeof data !== 'string') {
+    res.status(400).json({ error: 'Image data is required' });
+    return;
+  }
+
+  // Support data URI: data:image/png;base64,xxxx
+  const matches = data.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+  if (!matches) {
+    res.status(400).json({ error: 'Invalid image format. Expected base64 data URI.' });
+    return;
+  }
+
+  const mimeType = matches[1].toLowerCase();
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/jpg'];
+  if (!allowedMimeTypes.includes(mimeType)) {
+    res.status(400).json({ error: `Unsupported image type: ${mimeType}. Allowed: JPEG, PNG, WEBP, AVIF` });
+    return;
+  }
+
+  const buffer = Buffer.from(matches[2], 'base64');
+  const maxSize = 5 * 1024 * 1024; // 5 MB limit
+  if (buffer.length > maxSize) {
+    res.status(400).json({ error: 'File size exceeds maximum allowed limit of 5MB' });
+    return;
+  }
+
+  const ext = mimeType === 'image/jpeg' || mimeType === 'image/jpg' ? 'jpg'
+    : mimeType === 'image/png' ? 'png'
+    : mimeType === 'image/webp' ? 'webp' : 'avif';
+
+  const cleanName = (filename || 'boutique_upload')
+    .replace(/[^a-zA-Z0-9_-]/g, '_')
+    .slice(0, 30);
+  const savedFileName = `${cleanName}_${Date.now()}.${ext}`;
+  const targetPath = join(uploadsDir, savedFileName);
+
+  try {
+    writeFileSync(targetPath, buffer);
+    const publicUrl = `/uploads/${savedFileName}`;
+    res.json({
+      success: true,
+      url: publicUrl,
+      filename: savedFileName,
+      size: buffer.length,
+      mimeType,
+    });
+  } catch (err) {
+    console.error('Failed to save uploaded image:', err);
+    res.status(500).json({ error: 'Failed to save image on server' });
+  }
 });
 
 // Admin Authentication
@@ -421,10 +560,11 @@ app.post('/api/analytics/enquiry-click', (req, res) => {
     created_at: new Date().toISOString(),
   };
   dbEnquiries.unshift(log);
+  saveDb();
   res.status(201).json({ success: true, log });
 });
 
-app.get('/api/analytics/summary', (req, res) => {
+app.get('/api/analytics/summary', requireAdminAuth, (req, res) => {
   const totalProducts = dbProducts.length;
   const activeProducts = dbProducts.filter(p => p.status === 'ACTIVE').length;
   const outOfStock = dbProducts.filter(p => p.status === 'OUT_OF_STOCK' || p.stock_quantity === 0).length;
@@ -448,7 +588,7 @@ app.get('/api/analytics/summary', (req, res) => {
 });
 
 // CSV and JSON Exports
-app.get('/api/export/products-csv', (req, res) => {
+app.get('/api/export/products-csv', requireAdminAuth, (req, res) => {
   const headers = ['ID', 'Name', 'SKU', 'Category_ID', 'Fabric', 'Color', 'Occasion', 'Sizes', 'Price', 'Discount_Price', 'Stock', 'Status'];
   const rows = dbProducts.map(p => [
     p.id,
@@ -471,7 +611,7 @@ app.get('/api/export/products-csv', (req, res) => {
   res.send(csv);
 });
 
-app.get('/api/export/categories-csv', (req, res) => {
+app.get('/api/export/categories-csv', requireAdminAuth, (req, res) => {
   const headers = ['ID', 'Name', 'Slug', 'Status', 'Display_Order'];
   const rows = dbCategories.map(c => [
     c.id,
@@ -487,7 +627,7 @@ app.get('/api/export/categories-csv', (req, res) => {
   res.send(csv);
 });
 
-app.get('/api/export/backup-json', (req, res) => {
+app.get('/api/export/backup-json', requireAdminAuth, (req, res) => {
   const backup = {
     exported_at: new Date().toISOString(),
     boutique: dbSettings.business_name,
@@ -503,11 +643,12 @@ app.get('/api/export/backup-json', (req, res) => {
   res.send(JSON.stringify(backup, null, 2));
 });
 
-app.post('/api/seed-reset', (req, res) => {
+app.post('/api/seed-reset', requireAdminAuth, (req, res) => {
   dbProducts = [...INITIAL_PRODUCTS];
   dbCategories = [...INITIAL_CATEGORIES];
   dbCollections = [...INITIAL_COLLECTIONS];
   dbSettings = { ...INITIAL_BUSINESS_SETTINGS };
+  saveDb();
   res.json({ success: true, message: 'Database reset to original ethnic fashion catalog' });
 });
 

@@ -81,16 +81,17 @@ import {CatalogService} from '../../services/catalog.service';
               @for (cat of categories(); track cat.id) {
                 <li>
                   <a
-                    [routerLink]="['/products']"
+                    [routerLink]="['/shop']"
                     [queryParams]="{category: cat.slug}"
-                    class="hover:text-[#ff3f6c] transition-colors"
+                    (click)="onNavClick()"
+                    class="hover:text-[#be185d] transition-colors"
                   >
                     {{ cat.name }}
                   </a>
                 </li>
               }
               <li>
-                <a routerLink="/products" class="text-[#ff3f6c] font-bold hover:underline">
+                <a routerLink="/shop" (click)="onNavClick()" class="text-[#be185d] font-bold hover:underline">
                   All Indian Wear Catalog &rarr;
                 </a>
               </li>
@@ -113,7 +114,7 @@ import {CatalogService} from '../../services/catalog.service';
                     [href]="settings().google_maps_url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-[#ff3f6c] font-bold inline-flex items-center gap-1 hover:underline"
+                    class="text-[#be185d] font-bold inline-flex items-center gap-1 hover:underline"
                   >
                     <span>View on Google Maps</span>
                     <mat-icon class="text-xs">open_in_new</mat-icon>
@@ -129,14 +130,15 @@ import {CatalogService} from '../../services/catalog.service';
               Customer Policies & Concierge
             </h4>
             <ul class="space-y-1.5 text-xs text-[#535766]">
-              <li><a routerLink="/about" class="hover:text-[#ff3f6c] transition-colors">Our Weaving Heritage</a></li>
-              <li><a routerLink="/contact" class="hover:text-[#ff3f6c] transition-colors">Contact Boutique Concierge</a></li>
-              <li><a routerLink="/collections" class="hover:text-[#ff3f6c] transition-colors">Curated Collections</a></li>
-              <li><a routerLink="/categories" class="hover:text-[#ff3f6c] transition-colors">Shop by Category</a></li>
+              <li><a routerLink="/about" (click)="onNavClick()" class="hover:text-[#be185d] transition-colors">Our Weaving Heritage</a></li>
+              <li><a routerLink="/contact" (click)="onNavClick()" class="hover:text-[#be185d] transition-colors">Contact Boutique Concierge</a></li>
+              <li><a routerLink="/collections" (click)="onNavClick()" class="hover:text-[#be185d] transition-colors">Curated Collections</a></li>
+              <li><a routerLink="/categories" (click)="onNavClick()" class="hover:text-[#be185d] transition-colors">Shop by Category</a></li>
               <li class="pt-2">
                 <a
                   routerLink="/admin"
-                  class="inline-flex items-center gap-1 text-[#7e818c] hover:text-[#ff3f6c] font-semibold"
+                  (click)="onNavClick()"
+                  class="inline-flex items-center gap-1 text-[#7e818c] hover:text-[#be185d] font-semibold"
                 >
                   <mat-icon class="text-xs">admin_panel_settings</mat-icon>
                   <span>Merchant Admin Portal</span>
@@ -166,6 +168,12 @@ export class Footer {
 
   settings = this.catalogService.settings;
   categories = this.catalogService.categories;
+
+  onNavClick(): void {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }
 
   openWhatsApp(): void {
     const s = this.settings();
