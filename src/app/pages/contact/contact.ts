@@ -10,20 +10,20 @@ import {CatalogService} from '../../services/catalog.service';
   template: `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 space-y-10">
       
-      <!-- Myntra Breadcrumbs -->
+      <!-- Boutique Breadcrumbs -->
       <nav class="flex items-center gap-2 text-xs text-[#535766] font-medium">
-        <a routerLink="/" class="hover:text-[#ff3f6c] transition-colors">Home</a>
+        <a routerLink="/" class="hover:text-[#be185d] transition-colors">Home</a>
         <span aria-hidden="true" class="text-stone-300">/</span>
-        <span class="text-[#282c3f] font-bold">Contact & WhatsApp Concierge</span>
+        <span class="text-[#282c3f] font-semibold">Contact & WhatsApp Concierge</span>
       </nav>
 
       <!-- Header -->
       <div class="max-w-2xl space-y-2 border-b border-[#eaeaec] pb-6">
-        <div class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#ff3f6c]">
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#be185d]">
           <mat-icon class="text-sm">support_agent</mat-icon>
           <span>Direct Stylist Assistance</span>
         </div>
-        <h1 class="text-2xl sm:text-4xl font-black text-[#282c3f] tracking-tight uppercase">
+        <h1 class="text-2xl sm:text-4xl font-serif text-[#282c3f] tracking-tight">
           Connect with Viraasat Couture
         </h1>
         <p class="text-xs sm:text-sm text-[#535766] leading-relaxed">
@@ -37,13 +37,13 @@ import {CatalogService} from '../../services/catalog.service';
         <div class="lg:col-span-7 space-y-6">
           
           <!-- Primary WhatsApp Quick Connect Card -->
-          <div class="p-6 sm:p-8 bg-gradient-to-br from-[#ecfdf5] to-[#d1fae5] border border-emerald-300 rounded-2xl space-y-4 shadow-sm">
+          <div class="p-6 sm:p-8 bg-gradient-to-br from-[#ecfdf5] to-[#d1fae5] border border-emerald-300 rounded-2xl space-y-4 shadow-2xs">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-xl bg-[#25d366] text-white flex items-center justify-center shadow-md">
+              <div class="w-12 h-12 rounded-xl bg-[#25d366] text-white flex items-center justify-center shadow-xs">
                 <mat-icon class="text-2xl">chat</mat-icon>
               </div>
               <div>
-                <h3 class="text-base font-black text-[#064e3b]">WhatsApp Concierge (Instant Response)</h3>
+                <h3 class="text-base font-bold text-[#064e3b]">WhatsApp Concierge (Instant Response)</h3>
                 <p class="text-xs text-[#047857] font-semibold">Typical reply time: Under 10 minutes</p>
               </div>
             </div>
@@ -55,7 +55,7 @@ import {CatalogService} from '../../services/catalog.service';
             <button
               type="button"
               (click)="openWhatsApp()"
-              class="w-full sm:w-auto px-6 py-3.5 text-xs font-black uppercase tracking-wider text-white bg-[#25d366] hover:bg-[#20ba59] rounded-xl transition-all shadow-md active:scale-98 cursor-pointer inline-flex items-center justify-center gap-2"
+              class="w-full sm:w-auto px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white bg-[#25d366] hover:bg-[#20ba59] rounded-xl transition-all shadow-xs active:scale-98 cursor-pointer inline-flex items-center justify-center gap-2"
             >
               <mat-icon class="text-base">chat</mat-icon>
               <span>Chat with Stylist on {{ settings().phone }}</span>
@@ -64,8 +64,8 @@ import {CatalogService} from '../../services/catalog.service';
 
           <!-- Contact Details Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-xs">
-              <div class="text-[11px] font-black uppercase tracking-wider text-[#ff3f6c] flex items-center gap-1.5">
+            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#be185d] flex items-center gap-1.5">
                 <mat-icon class="text-sm">call</mat-icon>
                 <span>Direct Hotline</span>
               </div>
@@ -73,8 +73,8 @@ import {CatalogService} from '../../services/catalog.service';
               <p class="text-[11px] text-[#535766]">Available Mon – Sun, 10 AM to 8 PM</p>
             </div>
 
-            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-xs">
-              <div class="text-[11px] font-black uppercase tracking-wider text-[#ff3f6c] flex items-center gap-1.5">
+            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#be185d] flex items-center gap-1.5">
                 <mat-icon class="text-sm">mail</mat-icon>
                 <span>Customer Care Email</span>
               </div>
@@ -82,8 +82,8 @@ import {CatalogService} from '../../services/catalog.service';
               <p class="text-[11px] text-[#535766]">Order queries & bulk wedding gifting</p>
             </div>
 
-            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-xs">
-              <div class="text-[11px] font-black uppercase tracking-wider text-[#ff3f6c] flex items-center gap-1.5">
+            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#be185d] flex items-center gap-1.5">
                 <mat-icon class="text-sm">storefront</mat-icon>
                 <span>Boutique Flagship</span>
               </div>
@@ -91,8 +91,8 @@ import {CatalogService} from '../../services/catalog.service';
               <p class="text-[11px] text-[#535766]">{{ settings().city }}</p>
             </div>
 
-            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-xs">
-              <div class="text-[11px] font-black uppercase tracking-wider text-[#ff3f6c] flex items-center gap-1.5">
+            <div class="p-5 bg-white border border-[#eaeaec] rounded-xl space-y-1.5 shadow-2xs">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-[#be185d] flex items-center gap-1.5">
                 <mat-icon class="text-sm">schedule</mat-icon>
                 <span>Visiting Hours</span>
               </div>
@@ -104,8 +104,8 @@ import {CatalogService} from '../../services/catalog.service';
 
         <!-- Google Maps & Boutique Highlights (5 cols) -->
         <div class="lg:col-span-5 space-y-6">
-          <div class="p-6 bg-white border border-[#eaeaec] rounded-2xl space-y-4 shadow-xs">
-            <h3 class="text-sm font-black uppercase tracking-wider text-[#282c3f]">
+          <div class="p-6 bg-white border border-[#eaeaec] rounded-2xl space-y-4 shadow-2xs">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-[#282c3f]">
               Visit Our Styling Studio
             </h3>
             <p class="text-xs text-[#535766] leading-relaxed">
@@ -117,7 +117,7 @@ import {CatalogService} from '../../services/catalog.service';
                 [href]="settings().google_maps_url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-[#ff3f6c] bg-[#fff0f5] hover:bg-[#ff3f6c] hover:text-white border border-[#ff3f6c] rounded-xl transition-all"
+                class="block w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-[#be185d] bg-[#fdf2f8] hover:bg-[#be185d] hover:text-white border border-[#be185d] rounded-xl transition-all"
               >
                 Open Studio in Google Maps
               </a>

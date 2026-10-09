@@ -29,7 +29,7 @@ import {CatalogService} from '../../services/catalog.service';
         >
           <!-- Search Input Header -->
           <div class="p-4 sm:p-5 border-b border-[#eaeaec] flex items-center gap-3 bg-white">
-            <mat-icon class="text-[#ff3f6c] text-2xl">search</mat-icon>
+            <mat-icon class="text-[#be185d] text-2xl">search</mat-icon>
             <input
               type="text"
               placeholder="Search for sarees, lehengas, kurtas, banarasi, silk..."
@@ -41,7 +41,7 @@ import {CatalogService} from '../../services/catalog.service';
               <button
                 type="button"
                 (click)="query.set('')"
-                class="text-xs text-[#94969f] hover:text-[#ff3f6c] px-2 py-1 rounded cursor-pointer font-bold"
+                class="text-xs text-[#94969f] hover:text-[#be185d] px-2 py-1 rounded cursor-pointer font-bold"
               >
                 Clear
               </button>
@@ -55,41 +55,41 @@ import {CatalogService} from '../../services/catalog.service';
             </button>
           </div>
 
-          <!-- Quick Category Filters (Myntra Trend Tags) -->
-          <div class="px-5 py-2.5 bg-[#fdf0f4] border-b border-pink-100 flex items-center gap-2 overflow-x-auto text-xs">
-            <span class="text-[#ff3f6c] font-black uppercase text-[10px] whitespace-nowrap">Trending:</span>
+          <!-- Quick Category Filters -->
+          <div class="px-5 py-2.5 bg-[#fafafa] border-b border-[#eaeaec] flex items-center gap-2 overflow-x-auto text-xs">
+            <span class="text-[#535766] font-bold uppercase text-[10px] whitespace-nowrap">Popular:</span>
             <button
               type="button"
               (click)="query.set('Banarasi')"
-              class="px-2.5 py-1 bg-white border border-pink-200 hover:border-[#ff3f6c] hover:text-[#ff3f6c] rounded-full text-[#282c3f] font-bold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              class="px-2.5 py-1 bg-white border border-[#eaeaec] hover:border-[#be185d] hover:text-[#be185d] rounded-full text-[#282c3f] font-semibold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
               Banarasi Silk
             </button>
             <button
               type="button"
               (click)="query.set('Lehenga')"
-              class="px-2.5 py-1 bg-white border border-pink-200 hover:border-[#ff3f6c] hover:text-[#ff3f6c] rounded-full text-[#282c3f] font-bold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              class="px-2.5 py-1 bg-white border border-[#eaeaec] hover:border-[#be185d] hover:text-[#be185d] rounded-full text-[#282c3f] font-semibold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
               Lehengas
             </button>
             <button
               type="button"
               (click)="query.set('Kurta')"
-              class="px-2.5 py-1 bg-white border border-pink-200 hover:border-[#ff3f6c] hover:text-[#ff3f6c] rounded-full text-[#282c3f] font-bold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              class="px-2.5 py-1 bg-white border border-[#eaeaec] hover:border-[#be185d] hover:text-[#be185d] rounded-full text-[#282c3f] font-semibold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
               Kurta Sets
             </button>
             <button
               type="button"
               (click)="query.set('Anarkali')"
-              class="px-2.5 py-1 bg-white border border-pink-200 hover:border-[#ff3f6c] hover:text-[#ff3f6c] rounded-full text-[#282c3f] font-bold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              class="px-2.5 py-1 bg-white border border-[#eaeaec] hover:border-[#be185d] hover:text-[#be185d] rounded-full text-[#282c3f] font-semibold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
               Anarkali
             </button>
             <button
               type="button"
               (click)="query.set('Wedding')"
-              class="px-2.5 py-1 bg-white border border-pink-200 hover:border-[#ff3f6c] hover:text-[#ff3f6c] rounded-full text-[#282c3f] font-bold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              class="px-2.5 py-1 bg-white border border-[#eaeaec] hover:border-[#be185d] hover:text-[#be185d] rounded-full text-[#282c3f] font-semibold transition-colors whitespace-nowrap cursor-pointer shadow-xs"
             >
               Wedding Edit
             </button>
@@ -107,9 +107,9 @@ import {CatalogService} from '../../services/catalog.service';
               <div class="space-y-2">
                 @for (prod of results(); track prod.id) {
                   <a
-                    [routerLink]="['/products', prod.slug]"
+                    [routerLink]="['/product', prod.slug]"
                     (click)="close()"
-                    class="flex items-center gap-3.5 p-2 rounded-xl hover:bg-[#fff0f5] border border-transparent hover:border-[#ff3f6c]/20 transition-all group cursor-pointer"
+                    class="flex items-center gap-3.5 p-2 rounded-xl hover:bg-[#fdf2f8] border border-transparent hover:border-[#be185d]/20 transition-all group cursor-pointer"
                   >
                     <div class="w-14 h-16 rounded-lg bg-[#fbf5f7] overflow-hidden shrink-0 border border-[#eaeaec]">
                       <img
@@ -120,12 +120,12 @@ import {CatalogService} from '../../services/catalog.service';
                       />
                     </div>
                     <div class="flex-1 min-w-0">
-                      <div class="flex items-center gap-2 text-[11px] font-bold text-[#ff3f6c]">
+                      <div class="flex items-center gap-2 text-[11px] font-bold text-[#be185d]">
                         <span class="uppercase">{{ prod.brand || 'VIRAASAT' }}</span>
                         <span aria-hidden="true" class="text-stone-300">·</span>
                         <span class="text-[#7e818c] font-normal uppercase">{{ prod.sku }}</span>
                       </div>
-                      <h4 class="text-xs sm:text-sm font-bold text-[#282c3f] group-hover:text-[#ff3f6c] truncate">
+                      <h4 class="text-xs sm:text-sm font-bold text-[#282c3f] group-hover:text-[#be185d] truncate">
                         {{ prod.name }}
                       </h4>
                       <p class="text-[11px] text-[#535766] truncate mt-0.5">
@@ -133,14 +133,9 @@ import {CatalogService} from '../../services/catalog.service';
                       </p>
                     </div>
                     <div class="text-right shrink-0">
-                      <div class="text-xs sm:text-sm font-black text-[#282c3f] tabular-nums">
+                      <div class="text-xs sm:text-sm font-bold text-[#282c3f] tabular-nums">
                         {{ currency() }}{{ prod.price.toLocaleString() }}
                       </div>
-                      @if (prod.discount_price && prod.discount_price > prod.price) {
-                        <span class="text-[10px] text-[#ff905a] font-bold block">
-                          Save {{ currency() }}{{ (prod.discount_price - prod.price).toLocaleString() }}
-                        </span>
-                      }
                     </div>
                   </a>
                 }

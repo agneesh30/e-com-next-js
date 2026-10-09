@@ -15,6 +15,10 @@
     --brand-bg: #fafafa;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     color: #282c3f;
     background-color: #fafafa;

@@ -17,21 +17,21 @@ import {CatalogService} from '../../services/catalog.service';
         aria-hidden="true"
       ></div>
 
-      <!-- Slide-over Drawer Panel (Myntra Style Bag) -->
+      <!-- Slide-over Drawer Panel (Boutique Enquiry Bag) -->
       <aside
         class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-[#fafafb] shadow-2xl flex flex-col transition-transform duration-300 ease-out"
         role="dialog"
         aria-modal="true"
         aria-label="Enquiry Bag"
       >
-        <!-- Header with Myntra Pink Accents -->
+        <!-- Header with Brand Rose Accents -->
         <div class="px-6 py-4.5 bg-white border-b border-[#eaeaec] flex items-center justify-between shadow-xs">
           <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-full bg-[#fff0f5] text-[#ff3f6c] flex items-center justify-center">
+            <div class="w-8 h-8 rounded-full bg-[#fdf2f8] text-[#be185d] flex items-center justify-center">
               <mat-icon class="text-lg">shopping_bag</mat-icon>
             </div>
             <div>
-              <h2 class="text-sm font-black uppercase tracking-wider text-[#282c3f]">Enquiry Bag</h2>
+              <h2 class="text-sm font-bold uppercase tracking-wider text-[#282c3f]">Enquiry Bag</h2>
               <p class="text-[11px] text-[#535766] font-medium">
                 {{ totalItems() }} item{{ totalItems() === 1 ? '' : 's' }} selected for WhatsApp order
               </p>
@@ -53,18 +53,18 @@ import {CatalogService} from '../../services/catalog.service';
           @if (items().length === 0) {
             <!-- Empty State -->
             <div class="py-16 text-center flex flex-col items-center justify-center bg-white rounded-xl p-8 border border-[#eaeaec]">
-              <div class="w-20 h-20 rounded-full bg-[#fff0f5] flex items-center justify-center text-[#ff3f6c] mb-4">
+              <div class="w-20 h-20 rounded-full bg-[#fdf2f8] flex items-center justify-center text-[#be185d] mb-4">
                 <mat-icon class="text-4xl">shopping_bag</mat-icon>
               </div>
-              <h3 class="text-base font-black text-[#282c3f] mb-1">Hey, your enquiry bag is empty!</h3>
+              <h3 class="text-base font-bold text-[#282c3f] mb-1">Your enquiry bag is empty</h3>
               <p class="text-xs text-[#535766] max-w-xs mb-6 leading-relaxed">
-                Explore our festive sarees, lehengas, and kurtas to send an instant order on WhatsApp.
+                Explore our handcrafted sarees, lehengas, and kurtas to send an instant enquiry on WhatsApp.
               </p>
               <button
                 type="button"
                 (click)="close()"
-                routerLink="/products"
-                class="px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-lg shadow-md cursor-pointer"
+                routerLink="/shop"
+                class="px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#be185d] hover:bg-[#9d174d] rounded-lg shadow-xs cursor-pointer"
               >
                 Explore Ethnic Wear
               </button>
@@ -96,7 +96,7 @@ import {CatalogService} from '../../services/catalog.service';
                     <!-- Size / Color tags -->
                     <div class="mt-1 flex items-center gap-1.5 text-[10px]">
                       @if (item.selectedSize) {
-                        <span class="bg-[#fff0f5] text-[#ff3f6c] font-black px-1.5 py-0.5 rounded border border-[#ff3f6c]/30">
+                        <span class="bg-[#fdf2f8] text-[#be185d] font-bold px-1.5 py-0.5 rounded border border-[#be185d]/30">
                           Size: {{ item.selectedSize }}
                         </span>
                       }
@@ -112,11 +112,6 @@ import {CatalogService} from '../../services/catalog.service';
                       <span class="text-xs sm:text-sm font-black text-[#282c3f] tabular-nums">
                         {{ currencySymbol() }}{{ item.product.price.toLocaleString() }}
                       </span>
-                      @if (item.product.discount_price && item.product.discount_price > item.product.price) {
-                        <span class="text-[10px] text-[#94969f] line-through tabular-nums">
-                          {{ currencySymbol() }}{{ item.product.discount_price.toLocaleString() }}
-                        </span>
-                      }
                     </div>
 
                     <!-- Stepper & Remove -->
@@ -146,7 +141,7 @@ import {CatalogService} from '../../services/catalog.service';
                       <button
                         type="button"
                         (click)="removeItem(item.product.id)"
-                        class="text-[11px] text-[#94969f] hover:text-[#ff3f6c] font-semibold cursor-pointer"
+                        class="text-[11px] text-[#94969f] hover:text-[#be185d] font-semibold cursor-pointer"
                       >
                         Remove
                       </button>
@@ -170,7 +165,7 @@ import {CatalogService} from '../../services/catalog.service';
                   placeholder="e.g. Ananya Sharma"
                   [value]="customerName()"
                   (input)="customerName.set($any($event.target).value)"
-                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#ff3f6c]"
+                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#be185d]"
                 />
               </div>
 
@@ -182,7 +177,7 @@ import {CatalogService} from '../../services/catalog.service';
                   placeholder="e.g. Bangalore, 560001"
                   [value]="customerLocation()"
                   (input)="customerLocation.set($any($event.target).value)"
-                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#ff3f6c]"
+                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#be185d]"
                 />
               </div>
 
@@ -194,7 +189,7 @@ import {CatalogService} from '../../services/catalog.service';
                   placeholder="e.g. Preferred dispatch timeframe, color confirmation..."
                   [value]="customerNotes()"
                   (input)="customerNotes.set($any($event.target).value)"
-                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#ff3f6c] resize-none"
+                  class="w-full text-xs px-3 py-2 bg-[#f5f5f6] border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#be185d] resize-none"
                 ></textarea>
               </div>
 
@@ -203,7 +198,7 @@ import {CatalogService} from '../../services/catalog.service';
                 <button
                   type="button"
                   (click)="togglePreview()"
-                  class="text-[11px] text-[#ff3f6c] font-bold inline-flex items-center gap-1 cursor-pointer"
+                  class="text-[11px] text-[#be185d] font-bold inline-flex items-center gap-1 cursor-pointer"
                 >
                   <mat-icon class="text-xs">{{ showPreview() ? 'expand_less' : 'expand_more' }}</mat-icon>
                   <span>{{ showPreview() ? 'Hide' : 'Preview' }} formatted WhatsApp message</span>
@@ -254,14 +249,14 @@ import {CatalogService} from '../../services/catalog.service';
               <button
                 type="button"
                 (click)="clearCart()"
-                class="text-xs text-[#94969f] hover:text-[#ff3f6c] font-semibold cursor-pointer"
+                class="text-xs text-[#94969f] hover:text-[#be185d] font-semibold cursor-pointer"
               >
                 Clear Bag
               </button>
               <button
                 type="button"
                 (click)="close()"
-                class="text-xs text-[#ff3f6c] font-bold cursor-pointer hover:underline"
+                class="text-xs text-[#be185d] font-bold cursor-pointer hover:underline"
               >
                 Continue Shopping
               </button>

@@ -150,6 +150,12 @@ export class CartService {
       const subtotal = item.product.price * item.quantity;
       lines.push(`${idx + 1}. *${item.product.name}*`);
       lines.push(`   SKU: ${item.product.sku}`);
+      if (item.selectedSize) {
+        lines.push(`   Size: ${item.selectedSize}`);
+      }
+      if (item.selectedColor || item.product.color) {
+        lines.push(`   Color: ${item.selectedColor || item.product.color}`);
+      }
       lines.push(`   Quantity: ${item.quantity}`);
       lines.push(`   Price: ${currency}${item.product.price.toLocaleString()} each (${currency}${subtotal.toLocaleString()})`);
       if (item.notes) {

@@ -11,10 +11,10 @@ import {CatalogService} from '../../services/catalog.service';
     <footer class="bg-[#f5f5f6] text-[#535766] pt-12 pb-10 border-t border-[#eaeaec]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
-        <!-- Myntra Assurance Guarantee Strip -->
+        <!-- Boutique Assurance Guarantee Strip -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pb-10 border-b border-[#eaeaec]">
           <div class="flex items-center gap-3.5 bg-white p-4 rounded-xl border border-[#eaeaec] shadow-xs">
-            <div class="w-12 h-12 rounded-full bg-[#fff0f5] text-[#ff3f6c] flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 rounded-full bg-[#fdf2f8] text-[#be185d] flex items-center justify-center shrink-0">
               <mat-icon class="text-2xl">verified</mat-icon>
             </div>
             <div>
@@ -50,7 +50,7 @@ import {CatalogService} from '../../services/catalog.service';
           <!-- Col 1: Brand & Philosophy -->
           <div class="space-y-3">
             <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#ff3f6c] to-[#ff7555] flex items-center justify-center text-white font-serif font-black text-base">
+              <div class="w-8 h-8 rounded-lg bg-[#be185d] flex items-center justify-center text-white font-serif font-black text-base shadow-xs">
                 V
               </div>
               <span class="font-black text-base tracking-wider text-[#282c3f] uppercase">

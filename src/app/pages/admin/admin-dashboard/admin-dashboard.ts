@@ -23,7 +23,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
           <p class="text-xs text-stone-500">Please sign in with merchant credentials to access management controls.</p>
           <a
             routerLink="/admin/login"
-            class="inline-block px-5 py-2.5 text-xs font-bold text-white bg-[#ff3f6c] rounded-lg hover:bg-[#e0325d] shadow-sm"
+            class="inline-block px-5 py-2.5 text-xs font-bold text-white bg-[#be185d] rounded-lg hover:bg-[#9d174d] shadow-sm"
           >
             Go to Admin Login
           </a>
@@ -40,7 +40,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
               <span class="font-black text-lg tracking-wider text-[#282c3f] uppercase">
                 {{ settings().business_name }}
               </span>
-              <span class="text-[10px] font-bold uppercase bg-[#fff0f5] text-[#ff3f6c] px-2.5 py-0.5 rounded-full border border-pink-200">
+              <span class="text-[10px] font-bold uppercase bg-[#fdf2f8] text-[#be185d] px-2.5 py-0.5 rounded-full border border-pink-200">
                 Merchant Admin Portal
               </span>
             </div>
@@ -49,7 +49,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
               <a
                 routerLink="/"
                 target="_blank"
-                class="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#535766] hover:text-[#ff3f6c] font-bold transition-colors"
+                class="hidden sm:inline-flex items-center gap-1.5 text-xs text-[#535766] hover:text-[#be185d] font-bold transition-colors"
                 title="Open storefront in new tab"
               >
                 <span>View Public Store</span>
@@ -65,7 +65,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                 <button
                   type="button"
                   (click)="logout()"
-                  class="p-1.5 text-stone-500 hover:text-[#ff3f6c] rounded-lg hover:bg-[#fff0f5] transition-colors cursor-pointer"
+                  class="p-1.5 text-stone-500 hover:text-[#be185d] rounded-lg hover:bg-[#fdf2f8] transition-colors cursor-pointer"
                   title="Sign out"
                 >
                   <mat-icon class="text-lg">logout</mat-icon>
@@ -79,7 +79,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('overview')"
-              [class]="activeTab() === 'overview' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'overview' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">dashboard</mat-icon>
@@ -89,7 +89,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('products')"
-              [class]="activeTab() === 'products' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'products' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">inventory_2</mat-icon>
@@ -99,7 +99,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('categories')"
-              [class]="activeTab() === 'categories' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'categories' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">category</mat-icon>
@@ -109,7 +109,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('settings')"
-              [class]="activeTab() === 'settings' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'settings' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">settings</mat-icon>
@@ -119,7 +119,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('enquiries')"
-              [class]="activeTab() === 'enquiries' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'enquiries' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">chat</mat-icon>
@@ -129,7 +129,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
             <button
               type="button"
               (click)="activeTab.set('backups')"
-              [class]="activeTab() === 'backups' ? 'border-b-2 border-[#ff3f6c] text-[#ff3f6c] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
+              [class]="activeTab() === 'backups' ? 'border-b-2 border-[#be185d] text-[#be185d] font-black' : 'text-[#535766] hover:text-[#282c3f]'"
               class="py-3 px-3 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               <mat-icon class="text-sm">cloud_download</mat-icon>
@@ -177,7 +177,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                 <button
                   type="button"
                   (click)="openCreateProductModal()"
-                  class="px-3.5 py-2 text-xs font-bold text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  class="px-3.5 py-2 text-xs font-bold text-white bg-[#be185d] hover:bg-[#9d174d] rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <mat-icon class="text-sm">add</mat-icon>
                   <span>Add New Product</span>
@@ -281,7 +281,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                 <button
                   type="button"
                   (click)="openCreateProductModal()"
-                  class="px-4 py-2.5 text-xs font-bold text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-lg flex items-center justify-center gap-1.5 cursor-pointer shadow-xs whitespace-nowrap"
+                  class="px-4 py-2.5 text-xs font-bold text-white bg-[#be185d] hover:bg-[#9d174d] rounded-lg flex items-center justify-center gap-1.5 cursor-pointer shadow-xs whitespace-nowrap"
                 >
                   <mat-icon class="text-sm">add</mat-icon>
                   <span>Add Product</span>
@@ -395,7 +395,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                 <button
                   type="button"
                   (click)="openCreateCategoryModal()"
-                  class="px-4 py-2 text-xs font-bold text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  class="px-4 py-2 text-xs font-bold text-white bg-[#be185d] hover:bg-[#9d174d] rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <mat-icon class="text-sm">add</mat-icon>
                   <span>New Category</span>
@@ -569,7 +569,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                 <div class="pt-4 border-t border-stone-100 flex justify-end">
                   <button
                     type="submit"
-                    class="px-6 py-2.5 text-xs font-bold text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-lg cursor-pointer shadow-xs"
+                    class="px-6 py-2.5 text-xs font-bold text-white bg-[#be185d] hover:bg-[#9d174d] rounded-lg cursor-pointer shadow-xs"
                   >
                     Save Business Information
                   </button>
@@ -884,7 +884,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                   </button>
                   <button
                     type="submit"
-                    class="px-5 py-2 bg-[#ff3f6c] text-white rounded-lg hover:bg-[#e0325d] font-bold shadow-xs cursor-pointer"
+                    class="px-5 py-2 bg-[#be185d] text-white rounded-lg hover:bg-[#9d174d] font-bold shadow-xs cursor-pointer"
                   >
                     Save Product
                   </button>
@@ -963,7 +963,7 @@ type AdminTab = 'overview' | 'products' | 'categories' | 'settings' | 'enquiries
                   </button>
                   <button
                     type="submit"
-                    class="px-5 py-2 bg-[#ff3f6c] text-white rounded-lg hover:bg-[#e0325d] font-bold shadow-xs cursor-pointer"
+                    class="px-5 py-2 bg-[#be185d] text-white rounded-lg hover:bg-[#9d174d] font-bold shadow-xs cursor-pointer"
                   >
                     Save Category
                   </button>

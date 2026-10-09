@@ -13,10 +13,10 @@ import {AuthService} from '../../../services/auth.service';
         
         <!-- Header -->
         <div class="text-center space-y-2">
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-[#ff3f6c] to-[#ff7555] text-white mb-2 shadow-md">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#be185d] text-white mb-2 shadow-xs">
             <mat-icon class="text-2xl">admin_panel_settings</mat-icon>
           </div>
-          <h1 class="font-black text-2xl tracking-tight text-[#282c3f] uppercase">
+          <h1 class="font-serif font-bold text-2xl tracking-tight text-[#282c3f]">
             Merchant Admin Portal
           </h1>
           <p class="text-xs text-[#535766]">
@@ -25,13 +25,13 @@ import {AuthService} from '../../../services/auth.service';
         </div>
 
         <!-- Quick Demo Credentials Callout -->
-        <div class="p-3.5 bg-[#fff0f5] border border-pink-200 rounded-xl text-xs space-y-2">
-          <div class="flex items-center justify-between text-[#ff3f6c] font-bold">
+        <div class="p-3.5 bg-[#fdf2f8] border border-pink-200 rounded-xl text-xs space-y-2">
+          <div class="flex items-center justify-between text-[#be185d] font-bold">
             <span>Demo Credentials</span>
             <button
               type="button"
               (click)="fillDemoCredentials()"
-              class="text-xs text-[#ff3f6c] hover:underline font-black cursor-pointer"
+              class="text-xs text-[#be185d] hover:underline font-bold cursor-pointer"
             >
               1-Click Fill
             </button>
@@ -53,7 +53,7 @@ import {AuthService} from '../../../services/auth.service';
               placeholder="admin@business.com"
               [value]="email()"
               (input)="email.set($any($event.target).value)"
-              class="w-full text-xs px-3.5 py-2.5 border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#ff3f6c] text-[#282c3f]"
+              class="w-full text-xs px-3.5 py-2.5 border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#be185d] text-[#282c3f]"
             />
           </div>
 
@@ -66,14 +66,14 @@ import {AuthService} from '../../../services/auth.service';
               placeholder="••••••••"
               [value]="password()"
               (input)="password.set($any($event.target).value)"
-              class="w-full text-xs px-3.5 py-2.5 border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#ff3f6c] text-[#282c3f]"
+              class="w-full text-xs px-3.5 py-2.5 border border-[#eaeaec] rounded-lg focus:outline-none focus:border-[#be185d] text-[#282c3f]"
             />
           </div>
 
           <button
             type="submit"
             [disabled]="isLoading()"
-            class="w-full py-3 px-4 text-xs font-black uppercase tracking-wider text-white bg-[#ff3f6c] hover:bg-[#e0325d] rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+            class="w-full py-3 px-4 text-xs font-bold uppercase tracking-wider text-white bg-[#be185d] hover:bg-[#9d174d] rounded-xl transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
           >
             @if (isLoading()) {
               <mat-icon class="animate-spin text-base">refresh</mat-icon>

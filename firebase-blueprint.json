@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Indian ethnic wear apparel product in catalog",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "sku": { "type": "string" },
+        "brand": { "type": "string" },
+        "short_description": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "category_id": { "type": "string" },
+        "fabric": { "type": "string" },
+        "color": { "type": "string" },
+        "status": { "type": "string" },
+        "stock_quantity": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "status"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Apparel category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" },
+        "display_order": { "type": "number" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "FashionCollection": {
+      "title": "FashionCollection",
+      "description": "Curated fashion collection",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "display_order": { "type": "number" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "WhatsApp catalog customer enquiry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customer_name": { "type": "string" },
+        "customer_notes": { "type": "string" },
+        "items_count": { "type": "number" },
+        "estimated_total": { "type": "number" },
+        "products_summary": { "type": "string" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["id", "items_count", "estimated_total", "products_summary"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of all ethnic wear products"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Collection of apparel categories"
+    },
+    "/collections/{collectionId}": {
+      "schema": "FashionCollection",
+      "description": "Collection of fashion showcases"
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": "Enquiry",
+      "description": "WhatsApp purchase enquiries"
+    }
+  }
+}
