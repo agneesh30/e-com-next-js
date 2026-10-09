@@ -1,0 +1,7 @@
+{
+  "name": "Viraasat Couture - Indian Ethnic Wear & WhatsApp Catalog",
+  "description": "Discover handcrafted Sarees, Anarkalis, Lehengas, and Kurta Sets. Select your size and color, and order luxury Indian ethnic wear directly via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

@@ -1,0 +1,15 @@
+@if (!isAdminRoute()) {
+  <app-header />
+}
+
+<main class="min-h-screen">
+  <router-outlet />
+</main>
+
+@if (!isAdminRoute()) {
+  <app-footer />
+}
+
+<app-cart-drawer />
+<app-search-modal />
+<app-toast-container />
